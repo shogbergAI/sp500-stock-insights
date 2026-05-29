@@ -1,514 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S&P 500 Stock Insights | Market Dashboard</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;600&display=swap');
-        :root { --primary: #10b981; }
-        body { font-family: 'Inter', system_ui, sans-serif; }
-        .font-display { font-family: 'Space Grotesk', 'Inter', sans-serif; }
-        .section-header { font-size: 1.75rem; line-height: 1.1; font-weight: 700; letter-spacing: -.025em; }
-        .stock-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .stock-card:hover { transform: translateY(-4px); box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1); }
-        .news-card { transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1); }
-        .news-card:hover { transform: translateY(-2px); }
-        .metric-value { font-variant-numeric: tabular-nums; }
-        .finance-green { color: #10b981; }
-        .finance-red { color: #ef4444; }
-        .dashboard-bg { background: linear-gradient(135deg, #0f172a 0%, #1e2937 100%); }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>S&P 500 Stock Insights | Market Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    .section-header { font-size: 2.25rem; line-height: 1.1; font-weight: 700; }
+  </style>
 </head>
 <body class="bg-slate-950 text-slate-200">
-    <!-- Navbar -->
-    <nav class="bg-slate-900 border-b border-slate-800 sticky top-0 z-50">
-        <div class="max-w-screen-2xl mx-auto">
-            <div class="px-8 py-5 flex items-center justify-between">
-                <div class="flex items-center gap-x-3">
-                    <div class="w-10 h-10 bg-emerald-500 rounded-2xl flex items-center justify-center">
-                        <i class="fas fa-chart-line text-white text-2xl"></i>
-                    </div>
-                    <div>
-                        <span class="font-display text-3xl font-semibold tracking-tighter">S&P 500</span>
-                        <span class="text-emerald-400 text-xl font-medium">Insights</span>
-                    </div>
-                </div>
-                
-                <div class="hidden md:flex items-center gap-x-8 text-sm">
-                    <a href="#news" class="hover:text-emerald-400 transition-colors">News</a>
-                    <a href="#reports" class="hover:text-emerald-400 transition-colors">Reports</a>
-                    <a href="#undervalued" class="hover:text-emerald-400 transition-colors">Undervalued</a>
-                    <a href="#hot" class="hover:text-emerald-400 transition-colors">Hottest</a>
-                </div>
-                
-                <div class="flex items-center gap-x-4">
-                    <div class="hidden sm:flex items-center bg-slate-800 rounded-3xl px-4 py-1.5 text-xs">
-                        <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse mr-2"></div>
-                        <span class="text-emerald-400 font-medium">Live Market Data</span>
-                    </div>
-                    <a href="https://github.com/aztennisfan/sp500-stock-insights" target="_blank" 
-                       class="flex items-center gap-x-2 bg-slate-800 hover:bg-slate-700 transition-colors px-5 py-2 rounded-3xl text-sm font-medium">
-                        <i class="fab fa-github"></i>
-                        <span>GitHub</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </nav>
 
-    <!-- Hero Section -->
-    <div class="max-w-screen-2xl mx-auto px-8 pt-12 pb-16">
-        <div class="max-w-4xl">
-            <div class="inline-flex items-center gap-x-2 bg-slate-800 text-emerald-400 text-xs font-semibold tracking-[1px] px-4 py-1.5 rounded-3xl mb-6">
-                <i class="fas fa-globe"></i>
-                <span>MAY 29, 2026 • MARKET CLOSED</span>
-            </div>
-            
-            <h1 class="font-display text-7xl md:text-8xl font-bold tracking-tighter leading-none mb-6">
-                S&P 500<br>
-                <span class="bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">Market Hub</span>
-            </h1>
-            
-            <p class="max-w-lg text-xl text-slate-400 mb-8">
-                Aggregated intelligence on the world's most important stock index. 
-                News, earnings, undervalued opportunities & momentum plays.
-            </p>
-            
-            <div class="flex flex-wrap gap-4">
-                <a href="#news" 
-                   class="inline-flex items-center justify-center gap-x-3 bg-emerald-500 hover:bg-emerald-600 transition-all px-8 py-4 rounded-3xl font-semibold text-lg shadow-lg shadow-emerald-500/30">
-                    <span>Explore Latest News</span>
-                    <i class="fas fa-arrow-right"></i>
-                </a>
-                <button onclick="refreshData()" 
-                        class="inline-flex items-center justify-center gap-x-3 border border-slate-700 hover:bg-slate-800 transition-all px-8 py-4 rounded-3xl font-semibold text-lg">
-                    <i class="fas fa-sync-alt"></i>
-                    <span>Refresh Data</span>
-                </button>
-            </div>
+  <!-- Navbar -->
+  <nav class="border-b border-slate-800 bg-slate-950 sticky top-0 z-50">
+    <div class="max-w-screen-2xl mx-auto px-8 py-5 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <h1 class="text-2xl font-bold tracking-tight">S&P 500 Hub</h1>
+      </div>
+      
+      <!-- Search Bar -->
+      <div class="flex-1 max-w-md mx-8">
+        <div class="relative">
+          <input id="stockSearch" 
+                 type="text" 
+                 placeholder="Search ticker (e.g. NVDA, AAPL)..." 
+                 class="w-full bg-slate-900 border border-slate-700 rounded-3xl py-3 px-5 pl-12 text-sm focus:outline-none focus:border-emerald-500">
+          <i class="fas fa-search absolute left-4 top-3.5 text-slate-500"></i>
+          <button onclick="performSearch()" 
+                  class="absolute right-2 top-1.5 bg-emerald-600 hover:bg-emerald-500 px-6 py-2 rounded-3xl text-sm font-medium">
+            Search
+          </button>
         </div>
+      </div>
 
-        <!-- Live Ticker -->
-        <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6">
-                <div class="flex justify-between items-start">
-                    <div>
-                        <div class="text-sm text-slate-400">S&P 500 INDEX</div>
-                        <div class="font-display text-5xl font-semibold tracking-tighter mt-1">7,520.36</div>
-                    </div>
-                    <div class="text-right">
-                        <div class="finance-green flex items-center justify-end gap-x-1 text-lg font-semibold">
-                            <i class="fas fa-caret-up"></i> <span>+0.02%</span>
-                        </div>
-                        <div class="text-xs text-slate-500">May 27 close • Record high</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6">
-                <div class="flex justify-between items-start">
-                    <div>
-                        <div class="text-sm text-slate-400">DOW JONES</div>
-                        <div class="font-display text-5xl font-semibold tracking-tighter mt-1">50,644.28</div>
-                    </div>
-                    <div class="text-right">
-                        <div class="finance-green flex items-center justify-end gap-x-1 text-lg font-semibold">
-                            <i class="fas fa-caret-up"></i> <span>+0.36%</span>
-                        </div>
-                        <div class="text-xs text-slate-500">New all-time high</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6">
-                <div class="flex justify-between items-start">
-                    <div>
-                        <div class="text-sm text-slate-400">NASDAQ</div>
-                        <div class="font-display text-5xl font-semibold tracking-tighter mt-1">26,674.73</div>
-                    </div>
-                    <div class="text-right">
-                        <div class="finance-green flex items-center justify-end gap-x-1 text-lg font-semibold">
-                            <i class="fas fa-caret-up"></i> <span>+0.07%</span>
-                        </div>
-                        <div class="text-xs text-slate-500">Tech-led rally</div>
-                    </div>
-                </div>
-            </div>
-        </div>
+      <a href="https://github.com/aztennisfan/sp500-stock-insights" target="_blank" 
+         class="text-slate-400 hover:text-white">GitHub</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <div class="max-w-screen-2xl mx-auto px-8 py-16">
+    <div class="text-center">
+      <div class="text-emerald-400 text-sm tracking-widest">MAY 29, 2026 • MARKET CLOSED</div>
+      <h1 class="text-7xl font-bold tracking-tighter mt-4">S&P 500 Market Hub</h1>
+      <p class="max-w-lg mx-auto mt-6 text-xl text-slate-400">Real-time insights, earnings, undervalued picks & momentum plays</p>
+    </div>
+  </div>
+
+  <!-- Search Results Panel (hidden by default) -->
+  <div id="searchResults" class="hidden max-w-2xl mx-auto px-8 mb-12 bg-slate-900 border border-slate-700 rounded-3xl p-8"></div>
+
+  <!-- Upcoming Earnings Calendar -->
+  <div class="max-w-screen-2xl mx-auto px-8 py-16 border-t border-slate-800 bg-slate-900">
+    <div class="flex items-end justify-between mb-8">
+      <div>
+        <div class="uppercase tracking-widest text-emerald-400 text-sm">EARNINGS SEASON</div>
+        <h2 class="text-4xl font-bold">Upcoming Earnings Calendar</h2>
+      </div>
+      <input id="calendarFilter" type="text" placeholder="Filter companies..." 
+             class="bg-slate-800 border border-slate-700 rounded-3xl px-5 py-3 w-72 focus:outline-none">
     </div>
 
-    <!-- News Section -->
-    <div id="news" class="max-w-screen-2xl mx-auto px-8 py-16 border-t border-slate-800">
-        <div class="flex items-end justify-between mb-8">
-            <div>
-                <div class="uppercase tracking-[2px] text-xs font-semibold text-emerald-400 mb-2">BREAKING</div>
-                <h2 class="section-header">Latest S&P 500 News</h2>
-            </div>
-            <a href="https://www.cnbc.com/markets/" target="_blank" class="text-emerald-400 hover:text-emerald-300 flex items-center gap-x-2 text-sm font-medium">
-                View all on CNBC <i class="fas fa-external-link-alt ml-1"></i>
-            </a>
-        </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- News Card 1 -->
-            <div class="news-card bg-slate-900 border border-slate-800 rounded-3xl p-6 hover:border-emerald-500/50">
-                <div class="flex items-center gap-x-3 mb-4">
-                    <span class="px-3 py-1 bg-emerald-500/10 text-emerald-400 text-xs font-semibold rounded-2xl">MARKETS</span>
-                    <span class="text-xs text-slate-500">May 27, 2026</span>
-                </div>
-                <h3 class="font-semibold text-xl leading-tight mb-3">S&P 500 Hits Fresh Record Close as Tech Rally Continues</h3>
-                <p class="text-slate-400 text-[15px] mb-4 line-clamp-3">The broad index closed at a new all-time high of 7,519.12, led by a massive surge in Micron Technology shares that pushed the company past the $1 trillion market cap milestone for the first time.</p>
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center gap-x-2 text-xs">
-                        <span class="font-medium">CNBC</span>
-                    </div>
-                    <a href="https://www.cnbc.com/2026/05/25/stock-futures-today-live-updates.html" target="_blank" 
-                       class="text-emerald-400 hover:text-emerald-300 text-sm font-medium flex items-center gap-x-1.5">
-                        Read full story <i class="fas fa-arrow-right text-xs"></i>
-                    </a>
-                </div>
-            </div>
-
-            <!-- News Card 2 -->
-            <div class="news-card bg-slate-900 border border-slate-800 rounded-3xl p-6 hover:border-emerald-500/50">
-                <div class="flex items-center gap-x-3 mb-4">
-                    <span class="px-3 py-1 bg-emerald-500/10 text-emerald-400 text-xs font-semibold rounded-2xl">TECH</span>
-                    <span class="text-xs text-slate-500">May 26, 2026</span>
-                </div>
-                <h3 class="font-semibold text-xl leading-tight mb-3">Micron Surges 19%, Becomes 10th Largest U.S. Company</h3>
-                <p class="text-slate-400 text-[15px] mb-4 line-clamp-3">Memory chip giant Micron Technology soared past the $1 trillion market capitalization mark for the first time, overtaking Walmart and Eli Lilly amid strong AI demand.</p>
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center gap-x-2 text-xs">
-                        <span class="font-medium">Wall Street Journal</span>
-                    </div>
-                    <a href="https://www.wsj.com/livecoverage/stock-market-today-dow-sp-500-nasdaq-05-26-2026" target="_blank" 
-                       class="text-emerald-400 hover:text-emerald-300 text-sm font-medium flex items-center gap-x-1.5">
-                        Read full story <i class="fas fa-arrow-right text-xs"></i>
-                    </a>
-                </div>
-            </div>
-
-            <!-- News Card 3 -->
-            <div class="news-card bg-slate-900 border border-slate-800 rounded-3xl p-6 hover:border-emerald-500/50">
-                <div class="flex items-center gap-x-3 mb-4">
-                    <span class="px-3 py-1 bg-emerald-500/10 text-emerald-400 text-xs font-semibold rounded-2xl">OUTLOOK</span>
-                    <span class="text-xs text-slate-500">May 27, 2026</span>
-                </div>
-                <h3 class="font-semibold text-xl leading-tight mb-3">Analysts Raise S&P 500 Year-End Target to 7,620</h3>
-                <p class="text-slate-400 text-[15px] mb-4 line-clamp-3">Despite ongoing geopolitical tensions, a Reuters poll of 47 strategists forecasts the S&P 500 will finish 2026 slightly higher at 7,620, with further gains expected into 2027.</p>
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center gap-x-2 text-xs">
-                        <span class="font-medium">Reuters</span>
-                    </div>
-                    <a href="https://www.reuters.com/markets/us/sp-500-forecast-end-year-slightly-higher-even-war-drags-2026-05-27/" target="_blank" 
-                       class="text-emerald-400 hover:text-emerald-300 text-sm font-medium flex items-center gap-x-1.5">
-                        Read full story <i class="fas fa-arrow-right text-xs"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
+    <div class="bg-slate-950 border border-slate-800 rounded-3xl overflow-hidden">
+      <table class="w-full">
+        <thead>
+          <tr class="border-b border-slate-800">
+            <th class="text-left px-8 py-5">Company</th>
+            <th class="text-left px-6 py-5">Ticker</th>
+            <th class="text-left px-6 py-5">Date</th>
+            <th class="text-right px-6 py-5">Expected EPS</th>
+            <th class="text-center px-6 py-5">Time</th>
+          </tr>
+        </thead>
+        <tbody id="earningsBody">
+          <!-- Populated by JS -->
+        </tbody>
+      </table>
     </div>
+  </div>
 
-    <!-- Financial Reports Section -->
-    <div id="reports" class="max-w-screen-2xl mx-auto px-8 py-16 bg-slate-900 border-t border-slate-800">
-        <div class="max-w-5xl">
-            <div class="flex items-end justify-between mb-8">
-                <div>
-                    <div class="uppercase tracking-[2px] text-xs font-semibold text-emerald-400 mb-2">EARNINGS SEASON</div>
-                    <h2 class="section-header">Key Financial Reports</h2>
-                </div>
-            </div>
-            
-            <div class="prose prose-invert max-w-none mb-8 text-slate-400">
-                <p class="text-lg">Q1 2026 earnings season has been exceptionally strong, with 84% of S&P 500 companies beating estimates. Tech and semiconductor names led the way with impressive results.</p>
-            </div>
+  <script>
+    // Sample earnings data
+    const earningsData = [
+      {company: "Costco Wholesale", ticker: "COST", date: "June 3", eps: "3.82", time: "After Close"},
+      {company: "Synopsys", ticker: "SNPS", date: "June 4", eps: "3.15", time: "After Close"},
+      {company: "Broadcom", ticker: "AVGO", date: "June 5", eps: "10.85", time: "After Close"},
+      {company: "Dell Technologies", ticker: "DELL", date: "June 5", eps: "1.45", time: "After Close"},
+      {company: "CrowdStrike", ticker: "CRWD", date: "June 6", eps: "0.92", time: "After Close"}
+    ];
 
-            <div class="bg-slate-950 border border-slate-800 rounded-3xl overflow-hidden">
-                <table class="w-full">
-                    <thead>
-                        <tr class="border-b border-slate-800">
-                            <th class="text-left px-8 py-5 text-sm font-medium text-slate-400">Company</th>
-                            <th class="text-left px-6 py-5 text-sm font-medium text-slate-400">Ticker</th>
-                            <th class="text-left px-6 py-5 text-sm font-medium text-slate-400">Report Date</th>
-                            <th class="text-right px-6 py-5 text-sm font-medium text-slate-400">EPS Surprise</th>
-                            <th class="text-right px-8 py-5 text-sm font-medium text-slate-400">Key Takeaway</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-slate-800 text-sm">
-                        <tr class="hover:bg-slate-900">
-                            <td class="px-8 py-5 font-medium">Micron Technology</td>
-                            <td class="px-6 py-5"><span class="font-mono text-emerald-400">MU</span></td>
-                            <td class="px-6 py-5 text-slate-400">May 26</td>
-                            <td class="px-6 py-5 text-right"><span class="finance-green font-semibold">+18%</span></td>
-                            <td class="px-8 py-5 text-slate-400">Massive AI demand drove record results; $1T market cap achieved</td>
-                        </tr>
-                        <tr class="hover:bg-slate-900">
-                            <td class="px-8 py-5 font-medium">Nvidia</td>
-                            <td class="px-6 py-5"><span class="font-mono text-emerald-400">NVDA</span></td>
-                            <td class="px-6 py-5 text-slate-400">May 22</td>
-                            <td class="px-6 py-5 text-right"><span class="finance-green font-semibold">+12%</span></td>
-                            <td class="px-8 py-5 text-slate-400">Continued dominance in AI accelerators; raised guidance</td>
-                        </tr>
-                        <tr class="hover:bg-slate-900">
-                            <td class="px-8 py-5 font-medium">Walmart</td>
-                            <td class="px-6 py-5"><span class="font-mono text-emerald-400">WMT</span></td>
-                            <td class="px-6 py-5 text-slate-400">May 15</td>
-                            <td class="px-6 py-5 text-right"><span class="finance-green font-semibold">+8%</span></td>
-                            <td class="px-8 py-5 text-slate-400">Strong consumer spending; e-commerce growth accelerating</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <p class="text-xs text-slate-500 mt-4 text-center">Data sourced from company filings and FactSet. Next major reports: Costco, Synopsys (early June).</p>
+    function renderEarnings(filteredData) {
+      const tbody = document.getElementById('earningsBody');
+      tbody.innerHTML = '';
+      filteredData.forEach(item => {
+        const row = `<tr class="border-b border-slate-800 hover:bg-slate-900">
+          <td class="px-8 py-5 font-medium">${item.company}</td>
+          <td class="px-6 py-5 font-mono text-emerald-400">${item.ticker}</td>
+          <td class="px-6 py-5">${item.date}</td>
+          <td class="px-6 py-5 text-right font-medium">$${item.eps}</td>
+          <td class="px-6 py-5 text-center text-xs bg-slate-800 w-28">${item.time}</td>
+        </tr>`;
+        tbody.innerHTML += row;
+      });
+    }
+
+    // Initial render
+    renderEarnings(earningsData);
+
+    // Filter
+    document.getElementById('calendarFilter').addEventListener('input', (e) => {
+      const term = e.target.value.toLowerCase();
+      const filtered = earningsData.filter(item => 
+        item.company.toLowerCase().includes(term) || 
+        item.ticker.toLowerCase().includes(term)
+      );
+      renderEarnings(filtered);
+    });
+
+    // Stock Search
+    function performSearch() {
+      const query = document.getElementById('stockSearch').value.trim().toUpperCase();
+      const panel = document.getElementById('searchResults');
+      
+      if (!query) {
+        panel.classList.add('hidden');
+        return;
+      }
+
+      panel.innerHTML = `
+        <div class="flex justify-between items-start">
+          <div>
+            <h3 class="text-2xl font-semibold">${query} • Search Result</h3>
+            <p class="text-slate-400 mt-2">Latest data as of May 29, 2026</p>
+          </div>
+          <button onclick="document.getElementById('searchResults').classList.add('hidden')" 
+                  class="text-slate-400 hover:text-white">✕</button>
         </div>
-    </div>
-
-    <!-- Undervalued Stocks Section -->
-    <div id="undervalued" class="max-w-screen-2xl mx-auto px-8 py-16 border-t border-slate-800">
-        <div class="flex items-end justify-between mb-8">
-            <div>
-                <div class="uppercase tracking-[2px] text-xs font-semibold text-emerald-400 mb-2">VALUE OPPORTUNITIES</div>
-                <h2 class="section-header">Top Undervalued S&P 500 Stocks</h2>
-                <p class="text-slate-400 mt-2 max-w-md">Stocks trading at attractive valuations relative to earnings growth and peers (data as of late May 2026).</p>
-            </div>
+        <div class="mt-8 grid grid-cols-2 gap-6 text-sm">
+          <div>Price: <span class="font-mono text-emerald-400">$XXX.XX</span></div>
+          <div>Change: <span class="text-emerald-400">+1.8%</span></div>
+          <div>P/E Ratio: 42.3</div>
+          <div>Market Cap: $XXXB</div>
         </div>
+        <div class="mt-6 text-xs text-slate-500">Mock data — ready for real API integration.</div>
+      `;
+      panel.classList.remove('hidden');
+    }
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <!-- Undervalued Cards -->
-            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-8">
-                <div class="flex justify-between items-center mb-6">
-                    <div class="font-semibold text-xl">Everest Group</div>
-                    <div class="font-mono text-2xl font-semibold text-emerald-400">EG</div>
-                </div>
-                <div class="grid grid-cols-3 gap-4 mb-6">
-                    <div>
-                        <div class="text-xs text-slate-500">P/E Ratio</div>
-                        <div class="text-3xl font-semibold tracking-tight">9.02</div>
-                    </div>
-                    <div>
-                        <div class="text-xs text-slate-500">Div Yield</div>
-                        <div class="text-3xl font-semibold tracking-tight">2.46%</div>
-                    </div>
-                    <div>
-                        <div class="text-xs text-slate-500">Fair Value Upside</div>
-                        <div class="text-3xl font-semibold tracking-tight finance-green">+28%</div>
-                    </div>
-                </div>
-                <div class="text-sm text-slate-400">Insurance & reinsurance leader with strong balance sheet and consistent dividend growth. Significantly below historical averages.</div>
-            </div>
-
-            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-8">
-                <div class="flex justify-between items-center mb-6">
-                    <div class="font-semibold text-xl">Global Payments</div>
-                    <div class="font-mono text-2xl font-semibold text-emerald-400">GPN</div>
-                </div>
-                <div class="grid grid-cols-3 gap-4 mb-6">
-                    <div>
-                        <div class="text-xs text-slate-500">P/E Ratio</div>
-                        <div class="text-3xl font-semibold tracking-tight">11.88</div>
-                    </div>
-                    <div>
-                        <div class="text-xs text-slate-500">Div Yield</div>
-                        <div class="text-3xl font-semibold tracking-tight">1.68%</div>
-                    </div>
-                    <div>
-                        <div class="text-xs text-slate-500">Fair Value Upside</div>
-                        <div class="text-3xl font-semibold tracking-tight finance-green">+31%</div>
-                    </div>
-                </div>
-                <div class="text-sm text-slate-400">Payments processing giant benefiting from digital transaction growth. Attractive entry point after recent sector rotation.</div>
-            </div>
-
-            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-8">
-                <div class="flex justify-between items-center mb-6">
-                    <div class="font-semibold text-xl">Lennar Corp</div>
-                    <div class="font-mono text-2xl font-semibold text-emerald-400">LEN</div>
-                </div>
-                <div class="grid grid-cols-3 gap-4 mb-6">
-                    <div>
-                        <div class="text-xs text-slate-500">P/E Ratio</div>
-                        <div class="text-3xl font-semibold tracking-tight">12.77</div>
-                    </div>
-                    <div>
-                        <div class="text-xs text-slate-500">Div Yield</div>
-                        <div class="text-3xl font-semibold tracking-tight">2.25%</div>
-                    </div>
-                    <div>
-                        <div class="text-xs text-slate-500">Fair Value Upside</div>
-                        <div class="text-3xl font-semibold tracking-tight finance-green">+25%</div>
-                    </div>
-                </div>
-                <div class="text-sm text-slate-400">Leading U.S. homebuilder with strong backlog and land position. Housing market stabilization supports recovery thesis.</div>
-            </div>
-
-            <div class="bg-slate-900 border border-slate-800 rounded-3xl p-8">
-                <div class="flex justify-between items-center mb-6">
-                    <div class="font-semibold text-xl">Mosaic Co</div>
-                    <div class="font-mono text-2xl font-semibold text-emerald-400">MOS</div>
-                </div>
-                <div class="grid grid-cols-3 gap-4 mb-6">
-                    <div>
-                        <div class="text-xs text-slate-500">P/E Ratio</div>
-                        <div class="text-3xl font-semibold tracking-tight">14.19</div>
-                    </div>
-                    <div>
-                        <div class="text-xs text-slate-500">Div Yield</div>
-                        <div class="text-3xl font-semibold tracking-tight">3.68%</div>
-                    </div>
-                    <div>
-                        <div class="text-xs text-slate-500">Fair Value Upside</div>
-                        <div class="text-3xl font-semibold tracking-tight finance-green">+22%</div>
-                    </div>
-                </div>
-                <div class="text-sm text-slate-400">Agricultural chemicals producer with attractive dividend and exposure to global food security trends. Cyclical bottom forming.</div>
-            </div>
-        </div>
-        
-        <div class="mt-6 text-center">
-            <p class="text-xs text-slate-500">Sources: NerdWallet, Investing.com, Finviz • Valuations as of May 2026 • Not investment advice</p>
-        </div>
-    </div>
-
-    <!-- Hottest Stocks Section -->
-    <div id="hot" class="max-w-screen-2xl mx-auto px-8 py-16 border-t border-slate-800 bg-slate-900">
-        <div class="flex items-end justify-between mb-8">
-            <div>
-                <div class="uppercase tracking-[2px] text-xs font-semibold text-emerald-400 mb-2">MOMENTUM</div>
-                <h2 class="section-header">Hottest Stocks Right Now</h2>
-            </div>
-            <div class="text-sm text-slate-400">YTD Performance • May 29, 2026</div>
-        </div>
-
-        <div class="overflow-x-auto">
-            <table class="w-full min-w-[800px]">
-                <thead>
-                    <tr class="border-b border-slate-700">
-                        <th class="text-left px-8 py-4 text-sm font-medium text-slate-400">Ticker</th>
-                        <th class="text-left px-6 py-4 text-sm font-medium text-slate-400">Company</th>
-                        <th class="text-right px-6 py-4 text-sm font-medium text-slate-400">YTD Return</th>
-                        <th class="text-right px-6 py-4 text-sm font-medium text-slate-400">Recent Move</th>
-                        <th class="text-left px-8 py-4 text-sm font-medium text-slate-400">Why It's Hot</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-slate-800">
-                    <tr class="hover:bg-slate-800">
-                        <td class="px-8 py-5"><span class="font-mono font-bold text-xl text-emerald-400">SNDK</span></td>
-                        <td class="px-6 py-5 font-medium">Sandisk Corp</td>
-                        <td class="px-6 py-5 text-right"><span class="finance-green font-semibold text-xl">+172%</span></td>
-                        <td class="px-6 py-5 text-right text-emerald-400">+19% (5d)</td>
-                        <td class="px-8 py-5 text-sm text-slate-400">AI-driven NAND shortage; top S&P 500 performer of 2026</td>
-                    </tr>
-                    <tr class="hover:bg-slate-800">
-                        <td class="px-8 py-5"><span class="font-mono font-bold text-xl text-emerald-400">MU</span></td>
-                        <td class="px-6 py-5 font-medium">Micron Technology</td>
-                        <td class="px-6 py-5 text-right"><span class="finance-green font-semibold text-xl">+85%</span></td>
-                        <td class="px-6 py-5 text-right text-emerald-400">+19% (May 26)</td>
-                        <td class="px-8 py-5 text-sm text-slate-400">Crossed $1T market cap; explosive AI memory demand</td>
-                    </tr>
-                    <tr class="hover:bg-slate-800">
-                        <td class="px-8 py-5"><span class="font-mono font-bold text-xl text-emerald-400">TPL</span></td>
-                        <td class="px-6 py-5 font-medium">Texas Pacific Land</td>
-                        <td class="px-6 py-5 text-right"><span class="finance-green font-semibold text-xl">+76%</span></td>
-                        <td class="px-6 py-5 text-right text-emerald-400">+12% (wk)</td>
-                        <td class="px-8 py-5 text-sm text-slate-400">Royalty play on energy; strong cash flow & land assets</td>
-                    </tr>
-                    <tr class="hover:bg-slate-800">
-                        <td class="px-8 py-5"><span class="font-mono font-bold text-xl text-emerald-400">MRNA</span></td>
-                        <td class="px-6 py-5 font-medium">Moderna</td>
-                        <td class="px-6 py-5 text-right"><span class="finance-green font-semibold text-xl">+69%</span></td>
-                        <td class="px-6 py-5 text-right text-emerald-400">+8% (wk)</td>
-                        <td class="px-8 py-5 text-sm text-slate-400">Pipeline breakthroughs; mRNA platform validation</td>
-                    </tr>
-                    <tr class="hover:bg-slate-800">
-                        <td class="px-8 py-5"><span class="font-mono font-bold text-xl text-emerald-400">WDC</span></td>
-                        <td class="px-6 py-5 font-medium">Western Digital</td>
-                        <td class="px-6 py-5 text-right"><span class="finance-green font-semibold text-xl">+58%</span></td>
-                        <td class="px-6 py-5 text-right text-emerald-400">+15% (wk)</td>
-                        <td class="px-8 py-5 text-sm text-slate-400">Storage recovery + AI data center tailwinds</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        
-        <div class="mt-6 flex justify-center">
-            <div class="inline-flex items-center gap-x-2 text-xs bg-slate-800 px-4 py-2 rounded-3xl">
-                <i class="fas fa-info-circle text-emerald-400"></i>
-                <span class="text-slate-400">Performance data from TradingView & Yahoo Finance • Past performance is not indicative of future results</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer class="border-t border-slate-800 bg-slate-950 py-12">
-        <div class="max-w-screen-2xl mx-auto px-8">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-y-6">
-                <div class="text-sm text-slate-500">
-                    © 2026 S&P 500 Insights Dashboard • Created with GitHub • Data as of May 29, 2026
-                </div>
-                
-                <div class="flex items-center gap-x-6 text-sm">
-                    <a href="https://github.com/aztennisfan/sp500-stock-insights" target="_blank" class="hover:text-emerald-400 transition-colors">View Source on GitHub</a>
-                    <span class="text-slate-700">•</span>
-                    <span class="text-slate-500">This is a demonstration project. Not financial advice. Always do your own research.</span>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        function refreshData() {
-            const btns = document.querySelectorAll('button');
-            btns.forEach(btn => {
-                if (btn.innerText.includes('Refresh')) {
-                    const originalText = btn.innerHTML;
-                    btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> <span>Updating...</span>`;
-                    btn.disabled = true;
-                    
-                    setTimeout(() => {
-                        btn.innerHTML = originalText;
-                        btn.disabled = false;
-                        
-                        // Show success toast
-                        const toast = document.createElement('div');
-                        toast.className = 'fixed bottom-6 right-6 bg-emerald-500 text-white px-6 py-3 rounded-3xl shadow-xl flex items-center gap-x-3 z-[100]';
-                        toast.innerHTML = `
-                            <i class="fas fa-check-circle"></i>
-                            <span>Data refreshed from live sources</span>
-                        `;
-                        document.body.appendChild(toast);
-                        
-                        setTimeout(() => {
-                            toast.style.transition = 'all 0.4s ease';
-                            toast.style.opacity = '0';
-                            setTimeout(() => toast.remove(), 400);
-                        }, 2200);
-                    }, 1450);
-                }
-            });
-        }
-
-        // Tailwind script
-        function initializeTailwind() {
-            document.documentElement.style.setProperty('--accent', '#10b981');
-        }
-
-        // Keyboard shortcut
-        document.addEventListener('keydown', function(e) {
-            if (e.metaKey && e.key === '/') {
-                e.preventDefault();
-                const newsSection = document.getElementById('news');
-                newsSection.scrollIntoView({ behavior: 'smooth' });
-            }
-        });
-
-        // Boot
-        window.onload = function() {
-            initializeTailwind();
-            console.log('%c[S&P 500 Insights] Dashboard initialized successfully. Repo: https://github.com/aztennisfan/sp500-stock-insights', 'color:#64748b');
-        }
-    </script>
+    // Allow Enter key in search
+    document.getElementById('stockSearch').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') performSearch();
+    });
+  </script>
 </body>
 </html>
